@@ -5,17 +5,22 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using EmplyeeDataAccess;
+using System.Threading;
 
 namespace simple_asp_web.Controllers
 {
     public class EmployeesController : ApiController
     {
-        [HttpGet]
+        //[HttpGet]
+       
+        
+        [BasicAuthentication]
         public HttpResponseMessage Get( string gender="All")
         {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
-                switch (gender.ToLower())
+                string username = Thread.CurrentPrincipal.Identity.Name;
+                switch (username.ToLower())
                 {
                     case "all":
                         return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.ToList());
