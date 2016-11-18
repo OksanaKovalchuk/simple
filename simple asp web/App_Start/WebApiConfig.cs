@@ -8,6 +8,7 @@ using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using System.Net.Http.Headers;
 using WebApiContrib.Formatting.Jsonp;
+using System.Web.Http.Cors;
 
 namespace simple_asp_web
 {
@@ -47,8 +48,10 @@ namespace simple_asp_web
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-            var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
-            config.Formatters.Insert(0, jsonpFormatter);
+            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
+            //var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+            //config.Formatters.Insert(0, jsonpFormatter);
         }
     }
 }
