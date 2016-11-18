@@ -10,7 +10,8 @@ namespace simple_asp_web.Controllers
 {
     public class EmployeesController : ApiController
     {
-        public IEnumerable<Employee> Get()
+        [HttpGet]
+        public IEnumerable<Employee> LoadAllEmployees()
         {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
@@ -18,7 +19,8 @@ namespace simple_asp_web.Controllers
             }
         }
 
-        public HttpResponseMessage Get(int id)
+        [HttpGet]
+        public HttpResponseMessage LoadEmployeeByID(int id)
         {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
@@ -101,9 +103,9 @@ namespace simple_asp_web.Controllers
                         entities.SaveChanges();
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                     }
-
                 }
             }
+
             catch(Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
