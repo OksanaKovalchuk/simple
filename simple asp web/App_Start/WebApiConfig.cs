@@ -32,7 +32,7 @@ namespace simple_asp_web
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
             // Use camel case for JSON data.
-            config.Formatters.Add(new CustomJsonFormatter());
+            //config.Formatters.Add(new CustomJsonFormatter());
             // config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
            // config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
            // config.Formatters.Remove(config.Formatters.XmlFormatter);
