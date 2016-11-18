@@ -11,11 +11,25 @@ namespace simple_asp_web.Controllers
     public class EmployeesController : ApiController
     {
         [HttpGet]
-        public IEnumerable<Employee> LoadAllEmployees()
+        public HttpResponseMessage Get( string gender="All")
         {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
-                return entities.Employees.ToList();
+                switch (gender.ToLower())
+                {
+                    case "all":
+                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.ToList());
+                    case "male":
+                        return Request.CreateResponse(HttpStatusCode.OK, 
+                            entities.Employees.Where(e=>e.Gender.ToLower()=="male").ToList());
+                    case "female":
+                        return Request.CreateResponse(HttpStatusCode.OK,
+                           entities.Employees.Where(e => e.Gender.ToLower() == "female").ToList());
+                    default:
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                            "Value for gender must be Male or Female. " + gender + " is invalid");
+                }
+                //return entities.Employees.ToList();
             }
         }
 
@@ -81,7 +95,7 @@ namespace simple_asp_web.Controllers
             }
         }
 
-        public HttpResponseMessage Put(int id, [FromBody] Employee employee)
+        public HttpResponseMessage Put([FromBody]int id, [FromUri] Employee employee)
         {
             try
             {
