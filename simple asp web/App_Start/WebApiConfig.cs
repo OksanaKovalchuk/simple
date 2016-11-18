@@ -7,6 +7,7 @@ using System.Net.Http.Formatting;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using System.Net.Http.Headers;
+using WebApiContrib.Formatting.Jsonp;
 
 namespace simple_asp_web
 {
@@ -46,6 +47,8 @@ namespace simple_asp_web
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+            config.Formatters.Insert(0, jsonpFormatter);
         }
     }
 }
